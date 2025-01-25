@@ -1,5 +1,6 @@
 package com.isai.taskrestapi.model;
 
+import com.isai.taskrestapi.model.enums.StatusTask;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,6 @@ public class Task extends
 
     @Enumerated(EnumType.STRING)
     @NotBlank(message = "Por favor el campo status es obligatorio")
-    private String status;
+    private StatusTask status;
 
 }
