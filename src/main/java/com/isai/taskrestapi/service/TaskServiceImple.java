@@ -1,12 +1,14 @@
 package com.isai.taskrestapi.service;
 
 import com.isai.taskrestapi.model.Task;
+import com.isai.taskrestapi.model.enums.StatusTask;
 import com.isai.taskrestapi.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class TaskServiceImple
@@ -51,5 +53,10 @@ public class TaskServiceImple
         Task taskBD = findTaskById(taksID);
         taskRepository.delete(taskBD);
         return taskBD;
+    }
+
+    @Override
+    public List<Optional<Task>> findTaskByStatus(StatusTask status) {
+        return taskRepository.findTaskByStatus(status);
     }
 }
