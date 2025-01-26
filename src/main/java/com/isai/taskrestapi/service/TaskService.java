@@ -19,4 +19,6 @@ public interface TaskService {
 
     List<Optional<Task>> findTaskByStatus(StatusTask status);
 
+    List<Optional<Task>> findTaskByStatusIgnoreCase(String status);
+
 }

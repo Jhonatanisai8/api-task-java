@@ -28,8 +28,13 @@ public class TaskController {
     }
 
     @GetMapping("/findTaskByStatus/{status}")
-    public  List<Optional<Task>>  findTaskByStatus(@PathVariable StatusTask status) {
+    public List<Optional<Task>> findTaskByStatus(@PathVariable StatusTask status) {
         return serviceImple.findTaskByStatus(status);
+    }
+
+    @GetMapping("/findTaskByStatusIgnoreCase/{status}")
+    public List<Optional<Task>> findTaskByStatusIgnoreCase(@PathVariable String status) {
+        return serviceImple.findTaskByStatusIgnoreCase(status);
     }
 
     @PostMapping("/saveTask")

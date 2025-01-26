@@ -16,4 +16,8 @@ public interface TaskRepository
     @Query("SELECT l FROM Task l WHERE l.status = :status")
     List<Optional<Task>> findTaskByStatus(@Param("status") StatusTask status);
 
+    @Query("SELECT l FROM Task l WHERE lower(l.status) = lower(:status) ")
+    List<Optional<Task>> findTaskByStatusIgnoreCase(@Param("status") String status);
+
+
 }
