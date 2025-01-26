@@ -10,4 +10,8 @@ public interface TaskService {
     Task saveTask(Task task);
 
     Task findTaskById(Long id);
+
+    Task updateTask(Long taksID, Task task);
+
+    Task deleteTaskById(Long taksID);
 }
