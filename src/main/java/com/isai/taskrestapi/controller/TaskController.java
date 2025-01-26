@@ -37,6 +37,11 @@ public class TaskController {
         return serviceImple.findTaskByStatusIgnoreCase(status);
     }
 
+    @GetMapping("/findTaskByTittleIgnoreCase/{tittle}")
+    public Optional<Task> findTaskByTittleIgnoreCase(@PathVariable String tittle) {
+        return serviceImple.findTaskByTittleIgnoreCase(tittle);
+    }
+
     @PostMapping("/saveTask")
     public Task saveTask(@Valid @RequestBody Task task) {
         return serviceImple.saveTask(task);

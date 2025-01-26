@@ -65,4 +65,9 @@ public class TaskServiceImple
         StatusTask statusTask = StatusTask.valueOf(status.toLowerCase());
         return taskRepository.findTaskByStatusIgnoreCase(statusTask.name());
     }
+
+    @Override
+    public Optional<Task> findTaskByTittleIgnoreCase(String tittle) {
+        return taskRepository.findTaskByTittleIgnoreCase(tittle);
+    }
 }

@@ -21,4 +21,6 @@ public interface TaskService {
 
     List<Optional<Task>> findTaskByStatusIgnoreCase(String status);
 
+    Optional<Task> findTaskByTittleIgnoreCase(String tittle);
+
 }
