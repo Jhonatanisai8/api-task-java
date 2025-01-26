@@ -1,20 +1,24 @@
 package com.isai.taskrestapi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.io.Serializable;
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"fechaCreacion", "fechaActualizacion"}, allowGetters = true)
+@JsonIgnoreProperties(value = {"date_creation", "date_update"}, allowGetters = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,12 +27,18 @@ public abstract class AuditModel
     private static final Long serialVersionUID = 1L;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "fecha_creacion", nullable = false, updatable = false)
+    @Column(name = "date_creation", nullable = false, updatable = false)
     @CreatedDate
     private Date dateCreation;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "fecha_actualizacion", nullable = false)
+    @Column(name = "date_update", nullable = false)
     @LastModifiedDate
     private Date dateUpdate;
+
+    public static Long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+
 }
