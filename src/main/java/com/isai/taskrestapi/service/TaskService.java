@@ -8,4 +8,6 @@ public interface TaskService {
     List<Task> getAllTask();
 
     Task saveTask(Task task);
+
+    Task findTaskById(Long id);
 }
