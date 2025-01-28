@@ -1,5 +1,6 @@
 package com.isai.taskrestapi.controller;
 
+import com.isai.taskrestapi.Exceptions.EntityNotFoundException;
 import com.isai.taskrestapi.model.Task;
 import com.isai.taskrestapi.model.enums.StatusTask;
 import com.isai.taskrestapi.service.TaskServiceImple;
@@ -23,7 +24,7 @@ public class TaskController {
     }
 
     @GetMapping("/findTaskById/{taksID}")
-    public Task findTaskById(@PathVariable Long taksID) {
+    public Task findTaskById(@PathVariable Long taksID) throws EntityNotFoundException {
         return serviceImple.findTaskById(taksID);
     }
 
@@ -48,12 +49,12 @@ public class TaskController {
     }
 
     @PutMapping("/updateTask/{taksID}")
-    public Task updateTask(@PathVariable Long taksID, @Valid @RequestBody Task task) {
+    public Task updateTask(@PathVariable Long taksID, @Valid @RequestBody Task task) throws EntityNotFoundException{
         return serviceImple.updateTask(taksID, task);
     }
 
     @DeleteMapping("/deleteTask/{taksID}")
-    public Task deleteTaskById(@PathVariable Long taksID) {
+    public Task deleteTaskById(@PathVariable Long taksID)  throws EntityNotFoundException {
         return serviceImple.deleteTaskById(taksID);
     }
 

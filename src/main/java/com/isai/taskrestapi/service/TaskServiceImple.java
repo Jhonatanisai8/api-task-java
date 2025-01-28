@@ -1,5 +1,6 @@
 package com.isai.taskrestapi.service;
 
+import com.isai.taskrestapi.Exceptions.EntityNotFoundException;
 import com.isai.taskrestapi.model.Task;
 import com.isai.taskrestapi.model.enums.StatusTask;
 import com.isai.taskrestapi.repository.TaskRepository;
@@ -29,13 +30,18 @@ public class TaskServiceImple
     }
 
     @Override
-    public Task findTaskById(Long id) {
-        return taskRepository.findById(id).get();
+    public Task findTaskById(Long id) throws EntityNotFoundException {
+        Optional<Task> task = taskRepository.findById(id);
+        if (task.isEmpty()) {
+            throw new EntityNotFoundException("Tarea no Encontrada.");
+        }
+        return task.get();
     }
 
     @Override
-    public Task updateTask(Long taksID, Task task) {
+    public Task updateTask(Long taksID, Task task) throws EntityNotFoundException {
         Task taskBD = findTaskById(taksID);
+
         if (Objects.nonNull(task.getTittle()) && !task.getTittle().isEmpty()) {
             taskBD.setTittle(task.getTittle());
         }
@@ -49,7 +55,7 @@ public class TaskServiceImple
     }
 
     @Override
-    public Task deleteTaskById(Long taksID) {
+    public Task deleteTaskById(Long taksID) throws EntityNotFoundException {
         Task taskBD = findTaskById(taksID);
         taskRepository.delete(taskBD);
         return taskBD;

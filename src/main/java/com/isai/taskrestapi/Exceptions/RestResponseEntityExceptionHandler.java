@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -16,14 +17,15 @@ import java.util.Map;
 import java.util.Objects;
 
 @ControllerAdvice
-@ResponseStatus(HttpStatus.NOT_FOUND)
 public class RestResponseEntityExceptionHandler
         extends ResponseEntityExceptionHandler {
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<MessageError> localNotFound(EntityNotFoundException e) {
-        MessageError errorMesage = new MessageError(HttpStatus.NOT_FOUND, e.getMessage());
+        MessageError errorMessage = new MessageError(HttpStatus.NOT_FOUND, e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(errorMesage);
+                .body(errorMessage);
     }
 
     @Override
@@ -36,7 +38,7 @@ public class RestResponseEntityExceptionHandler
                         }
                 );
         return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
+                .status(HttpStatus.BAD_REQUEST)
                 .body(errors);
     }
 }

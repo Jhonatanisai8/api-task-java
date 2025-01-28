@@ -1,5 +1,6 @@
 package com.isai.taskrestapi.service;
 
+import com.isai.taskrestapi.Exceptions.EntityNotFoundException;
 import com.isai.taskrestapi.model.Task;
 import com.isai.taskrestapi.model.enums.StatusTask;
 
@@ -11,11 +12,11 @@ public interface TaskService {
 
     Task saveTask(Task task);
 
-    Task findTaskById(Long id);
+    Task findTaskById(Long id) throws EntityNotFoundException;
 
-    Task updateTask(Long taksID, Task task);
+    Task updateTask(Long taksID, Task task) throws EntityNotFoundException;
 
-    Task deleteTaskById(Long taksID);
+    Task deleteTaskById(Long taksID)  throws EntityNotFoundException;
 
     List<Optional<Task>> findTaskByStatus(StatusTask status);
 
