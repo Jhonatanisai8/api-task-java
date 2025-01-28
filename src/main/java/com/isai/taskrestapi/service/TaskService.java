@@ -18,9 +18,9 @@ public interface TaskService {
 
     Task deleteTaskById(Long taksID)  throws EntityNotFoundException;
 
-    List<Optional<Task>> findTaskByStatus(StatusTask status);
+    List<Optional<Task>> findTaskByStatus(StatusTask status) throws EntityNotFoundException;
 
-    List<Optional<Task>> findTaskByStatusIgnoreCase(String status);
+    List<Task> findTaskByStatusIgnoreCase(String status) throws IllegalArgumentException;
 
     Optional<Task> findTaskByTittleIgnoreCase(String tittle);
 

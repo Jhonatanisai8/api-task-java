@@ -29,12 +29,12 @@ public class TaskController {
     }
 
     @GetMapping("/findTaskByStatus/{status}")
-    public List<Optional<Task>> findTaskByStatus(@PathVariable StatusTask status) {
+    public List<Optional<Task>> findTaskByStatus(@PathVariable StatusTask status) throws EntityNotFoundException {
         return serviceImple.findTaskByStatus(status);
     }
 
     @GetMapping("/findTaskByStatusIgnoreCase/{status}")
-    public List<Optional<Task>> findTaskByStatusIgnoreCase(@PathVariable String status) {
+    public List<Task> findTaskByStatusIgnoreCase(@PathVariable String status) throws IllegalArgumentException {
         return serviceImple.findTaskByStatusIgnoreCase(status);
     }
 
@@ -49,12 +49,12 @@ public class TaskController {
     }
 
     @PutMapping("/updateTask/{taksID}")
-    public Task updateTask(@PathVariable Long taksID, @Valid @RequestBody Task task) throws EntityNotFoundException{
+    public Task updateTask(@PathVariable Long taksID, @Valid @RequestBody Task task) throws EntityNotFoundException {
         return serviceImple.updateTask(taksID, task);
     }
 
     @DeleteMapping("/deleteTask/{taksID}")
-    public Task deleteTaskById(@PathVariable Long taksID)  throws EntityNotFoundException {
+    public Task deleteTaskById(@PathVariable Long taksID) throws EntityNotFoundException {
         return serviceImple.deleteTaskById(taksID);
     }
 

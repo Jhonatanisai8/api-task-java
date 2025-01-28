@@ -33,7 +33,7 @@ public class TaskServiceImple
     public Task findTaskById(Long id) throws EntityNotFoundException {
         Optional<Task> task = taskRepository.findById(id);
         if (task.isEmpty()) {
-            throw new EntityNotFoundException("Tarea no Encontrada.");
+            throw new EntityNotFoundException("Tarea no Encontrada con ID: " + id);
         }
         return task.get();
     }
@@ -62,14 +62,28 @@ public class TaskServiceImple
     }
 
     @Override
-    public List<Optional<Task>> findTaskByStatus(StatusTask status) {
-        return taskRepository.findTaskByStatus(status);
+    public List<Optional<Task>> findTaskByStatus(StatusTask status) throws EntityNotFoundException {
+        List<Optional<Task>> tasksLists = taskRepository.findTaskByStatus(status);
+        if (tasksLists.isEmpty()) {
+            throw new EntityNotFoundException("Tareas no encontradas con Estado: " + status.name());
+        }
+        return tasksLists;
     }
 
     @Override
-    public List<Optional<Task>> findTaskByStatusIgnoreCase(String status) {
-        StatusTask statusTask = StatusTask.valueOf(status.toLowerCase());
-        return taskRepository.findTaskByStatusIgnoreCase(statusTask.name());
+    public List<Task> findTaskByStatusIgnoreCase(String status) throws IllegalArgumentException {
+        if (status.equalsIgnoreCase("pending")
+                || status.equalsIgnoreCase("in_progress")
+                || status.equalsIgnoreCase("completed")) {
+            StatusTask statusTask = StatusTask.valueOf(status.toLowerCase());
+            List<Optional<Task>> taskBD = taskRepository.findTaskByStatusIgnoreCase(statusTask.name());
+            return taskBD.stream()
+                    .map(Optional::get)
+                    .toList();
+        } else {
+            throw new IllegalArgumentException("No se Encontro tareas con dicho estado: " + status);
+        }
+
     }
 
     @Override

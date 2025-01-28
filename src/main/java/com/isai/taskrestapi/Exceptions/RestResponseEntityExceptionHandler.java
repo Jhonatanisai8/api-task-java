@@ -19,8 +19,9 @@ import java.util.Objects;
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler
         extends ResponseEntityExceptionHandler {
+
     @ExceptionHandler(EntityNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.NOT_FOUND) //Captura excepciones cuando un recurso no existe
     public ResponseEntity<MessageError> localNotFound(EntityNotFoundException e) {
         MessageError errorMessage = new MessageError(HttpStatus.NOT_FOUND, e.getMessage());
         return ResponseEntity
@@ -28,7 +29,7 @@ public class RestResponseEntityExceptionHandler
                 .body(errorMessage);
     }
 
-    @Override
+    @Override//Captura errores de validación en peticiones
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         Map<String, Object> errors = new HashMap<>();
         ex.getBindingResult()
@@ -40,5 +41,14 @@ public class RestResponseEntityExceptionHandler
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(errors);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)//Captura excepciones cuando un recurso no existe pasando un deteminado argumento
+    public ResponseEntity<MessageError> ilegalArgument(IllegalArgumentException e) {
+        MessageError errorMessage = new MessageError(HttpStatus.BAD_REQUEST, e.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errorMessage);
     }
 }
